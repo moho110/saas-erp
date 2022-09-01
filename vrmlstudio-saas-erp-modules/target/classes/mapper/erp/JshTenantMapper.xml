@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vrmlstudio.erp.mapper.JshTenantMapper">
+    
+    <resultMap type="JshTenant" id="JshTenantResult">
+        <result property="id"    column="id"    />
+        <result property="tenantId"    column="tenant_id"    />
+        <result property="loginName"    column="login_name"    />
+        <result property="userNumLimit"    column="user_num_limit"    />
+        <result property="type"    column="type"    />
+        <result property="enabled"    column="enabled"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="expireTime"    column="expire_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectJshTenantVo">
+        select id, tenant_id, login_name, user_num_limit, type, enabled, create_time, expire_time, remark from jsh_tenant
+    </sql>
+
+    <select id="selectJshTenantList" parameterType="JshTenant" resultMap="JshTenantResult">
+        <include refid="selectJshTenantVo"/>
+        <where>  
+            <if test="tenantId != null "> and tenant_id = #{tenantId}</if>
+            <if test="loginName != null  and loginName != ''"> and login_name like concat('%', #{loginName}, '%')</if>
+            <if test="userNumLimit != null "> and user_num_limit = #{userNumLimit}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="enabled != null "> and enabled = #{enabled}</if>
+            <if test="expireTime != null "> and expire_time = #{expireTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectJshTenantById" parameterType="Long" resultMap="JshTenantResult">
+        <include refid="selectJshTenantVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertJshTenant" parameterType="JshTenant" useGeneratedKeys="true" keyProperty="id">
+        insert into jsh_tenant
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tenantId != null">tenant_id,</if>
+            <if test="loginName != null">login_name,</if>
+            <if test="userNumLimit != null">user_num_limit,</if>
+            <if test="type != null">type,</if>
+            <if test="enabled != null">enabled,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="expireTime != null">expire_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tenantId != null">#{tenantId},</if>
+            <if test="loginName != null">#{loginName},</if>
+            <if test="userNumLimit != null">#{userNumLimit},</if>
+            <if test="type != null">#{type},</if>
+            <if test="enabled != null">#{enabled},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="expireTime != null">#{expireTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJshTenant" parameterType="JshTenant">
+        update jsh_tenant
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="tenantId != null">tenant_id = #{tenantId},</if>
+            <if test="loginName != null">login_name = #{loginName},</if>
+            <if test="userNumLimit != null">user_num_limit = #{userNumLimit},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="enabled != null">enabled = #{enabled},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="expireTime != null">expire_time = #{expireTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteJshTenantById" parameterType="Long">
+        delete from jsh_tenant where id = #{id}
+    </delete>
+
+    <delete id="deleteJshTenantByIds" parameterType="String">
+        delete from jsh_tenant where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

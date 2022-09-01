@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vrmlstudio.erp.mapper.JshSupplierMapper">
+    
+    <resultMap type="JshSupplier" id="JshSupplierResult">
+        <result property="id"    column="id"    />
+        <result property="supplier"    column="supplier"    />
+        <result property="contacts"    column="contacts"    />
+        <result property="phoneNum"    column="phone_num"    />
+        <result property="email"    column="email"    />
+        <result property="description"    column="description"    />
+        <result property="isystem"    column="isystem"    />
+        <result property="type"    column="type"    />
+        <result property="enabled"    column="enabled"    />
+        <result property="advanceIn"    column="advance_in"    />
+        <result property="beginNeedGet"    column="begin_need_get"    />
+        <result property="beginNeedPay"    column="begin_need_pay"    />
+        <result property="allNeedGet"    column="all_need_get"    />
+        <result property="allNeedPay"    column="all_need_pay"    />
+        <result property="fax"    column="fax"    />
+        <result property="telephone"    column="telephone"    />
+        <result property="address"    column="address"    />
+        <result property="taxNum"    column="tax_num"    />
+        <result property="bankName"    column="bank_name"    />
+        <result property="accountNumber"    column="account_number"    />
+        <result property="taxRate"    column="tax_rate"    />
+        <result property="tenantId"    column="tenant_id"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectJshSupplierVo">
+        select id, supplier, contacts, phone_num, email, description, isystem, type, enabled, advance_in, begin_need_get, begin_need_pay, all_need_get, all_need_pay, fax, telephone, address, tax_num, bank_name, account_number, tax_rate, tenant_id, delete_flag from jsh_supplier
+    </sql>
+
+    <select id="selectJshSupplierList" parameterType="JshSupplier" resultMap="JshSupplierResult">
+        <include refid="selectJshSupplierVo"/>
+        <where>  
+            <if test="supplier != null  and supplier != ''"> and supplier = #{supplier}</if>
+            <if test="contacts != null  and contacts != ''"> and contacts = #{contacts}</if>
+            <if test="phoneNum != null  and phoneNum != ''"> and phone_num = #{phoneNum}</if>
+            <if test="email != null  and email != ''"> and email = #{email}</if>
+            <if test="description != null  and description != ''"> and description = #{description}</if>
+            <if test="isystem != null "> and isystem = #{isystem}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="enabled != null "> and enabled = #{enabled}</if>
+            <if test="advanceIn != null "> and advance_in = #{advanceIn}</if>
+            <if test="beginNeedGet != null "> and begin_need_get = #{beginNeedGet}</if>
+            <if test="beginNeedPay != null "> and begin_need_pay = #{beginNeedPay}</if>
+            <if test="allNeedGet != null "> and all_need_get = #{allNeedGet}</if>
+            <if test="allNeedPay != null "> and all_need_pay = #{allNeedPay}</if>
+            <if test="fax != null  and fax != ''"> and fax = #{fax}</if>
+            <if test="telephone != null  and telephone != ''"> and telephone = #{telephone}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="taxNum != null  and taxNum != ''"> and tax_num = #{taxNum}</if>
+            <if test="bankName != null  and bankName != ''"> and bank_name like concat('%', #{bankName}, '%')</if>
+            <if test="accountNumber != null  and accountNumber != ''"> and account_number = #{accountNumber}</if>
+            <if test="taxRate != null "> and tax_rate = #{taxRate}</if>
+            <if test="tenantId != null "> and tenant_id = #{tenantId}</if>
+            <if test="deleteFlag != null  and deleteFlag != ''"> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectJshSupplierById" parameterType="Long" resultMap="JshSupplierResult">
+        <include refid="selectJshSupplierVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertJshSupplier" parameterType="JshSupplier" useGeneratedKeys="true" keyProperty="id">
+        insert into jsh_supplier
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="supplier != null and supplier != ''">supplier,</if>
+            <if test="contacts != null">contacts,</if>
+            <if test="phoneNum != null">phone_num,</if>
+            <if test="email != null">email,</if>
+            <if test="description != null">description,</if>
+            <if test="isystem != null">isystem,</if>
+            <if test="type != null">type,</if>
+            <if test="enabled != null">enabled,</if>
+            <if test="advanceIn != null">advance_in,</if>
+            <if test="beginNeedGet != null">begin_need_get,</if>
+            <if test="beginNeedPay != null">begin_need_pay,</if>
+            <if test="allNeedGet != null">all_need_get,</if>
+            <if test="allNeedPay != null">all_need_pay,</if>
+            <if test="fax != null">fax,</if>
+            <if test="telephone != null">telephone,</if>
+            <if test="address != null">address,</if>
+            <if test="taxNum != null">tax_num,</if>
+            <if test="bankName != null">bank_name,</if>
+            <if test="accountNumber != null">account_number,</if>
+            <if test="taxRate != null">tax_rate,</if>
+            <if test="tenantId != null">tenant_id,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="supplier != null and supplier != ''">#{supplier},</if>
+            <if test="contacts != null">#{contacts},</if>
+            <if test="phoneNum != null">#{phoneNum},</if>
+            <if test="email != null">#{email},</if>
+            <if test="description != null">#{description},</if>
+            <if test="isystem != null">#{isystem},</if>
+            <if test="type != null">#{type},</if>
+            <if test="enabled != null">#{enabled},</if>
+            <if test="advanceIn != null">#{advanceIn},</if>
+            <if test="beginNeedGet != null">#{beginNeedGet},</if>
+            <if test="beginNeedPay != null">#{beginNeedPay},</if>
+            <if test="allNeedGet != null">#{allNeedGet},</if>
+            <if test="allNeedPay != null">#{allNeedPay},</if>
+            <if test="fax != null">#{fax},</if>
+            <if test="telephone != null">#{telephone},</if>
+            <if test="address != null">#{address},</if>
+            <if test="taxNum != null">#{taxNum},</if>
+            <if test="bankName != null">#{bankName},</if>
+            <if test="accountNumber != null">#{accountNumber},</if>
+            <if test="taxRate != null">#{taxRate},</if>
+            <if test="tenantId != null">#{tenantId},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJshSupplier" parameterType="JshSupplier">
+        update jsh_supplier
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="supplier != null and supplier != ''">supplier = #{supplier},</if>
+            <if test="contacts != null">contacts = #{contacts},</if>
+            <if test="phoneNum != null">phone_num = #{phoneNum},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="isystem != null">isystem = #{isystem},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="enabled != null">enabled = #{enabled},</if>
+            <if test="advanceIn != null">advance_in = #{advanceIn},</if>
+            <if test="beginNeedGet != null">begin_need_get = #{beginNeedGet},</if>
+            <if test="beginNeedPay != null">begin_need_pay = #{beginNeedPay},</if>
+            <if test="allNeedGet != null">all_need_get = #{allNeedGet},</if>
+            <if test="allNeedPay != null">all_need_pay = #{allNeedPay},</if>
+            <if test="fax != null">fax = #{fax},</if>
+            <if test="telephone != null">telephone = #{telephone},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="taxNum != null">tax_num = #{taxNum},</if>
+            <if test="bankName != null">bank_name = #{bankName},</if>
+            <if test="accountNumber != null">account_number = #{accountNumber},</if>
+            <if test="taxRate != null">tax_rate = #{taxRate},</if>
+            <if test="tenantId != null">tenant_id = #{tenantId},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteJshSupplierById" parameterType="Long">
+        delete from jsh_supplier where id = #{id}
+    </delete>
+
+    <delete id="deleteJshSupplierByIds" parameterType="String">
+        delete from jsh_supplier where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

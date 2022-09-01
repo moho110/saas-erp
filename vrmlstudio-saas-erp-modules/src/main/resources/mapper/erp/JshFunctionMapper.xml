@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vrmlstudio.erp.mapper.JshFunctionMapper">
+    
+    <resultMap type="JshFunction" id="JshFunctionResult">
+        <result property="id"    column="id"    />
+        <result property="number"    column="number"    />
+        <result property="name"    column="name"    />
+        <result property="parentNumber"    column="parent_number"    />
+        <result property="url"    column="url"    />
+        <result property="component"    column="component"    />
+        <result property="state"    column="state"    />
+        <result property="sort"    column="sort"    />
+        <result property="enabled"    column="enabled"    />
+        <result property="type"    column="type"    />
+        <result property="pushBtn"    column="push_btn"    />
+        <result property="icon"    column="icon"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectJshFunctionVo">
+        select id, number, name, parent_number, url, component, state, sort, enabled, type, push_btn, icon, delete_flag from jsh_function
+    </sql>
+
+    <select id="selectJshFunctionList" parameterType="JshFunction" resultMap="JshFunctionResult">
+        <include refid="selectJshFunctionVo"/>
+        <where>  
+            <if test="number != null  and number != ''"> and number = #{number}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="parentNumber != null  and parentNumber != ''"> and parent_number = #{parentNumber}</if>
+            <if test="url != null  and url != ''"> and url = #{url}</if>
+            <if test="component != null  and component != ''"> and component = #{component}</if>
+            <if test="state != null "> and state = #{state}</if>
+            <if test="sort != null  and sort != ''"> and sort = #{sort}</if>
+            <if test="enabled != null "> and enabled = #{enabled}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="pushBtn != null  and pushBtn != ''"> and push_btn = #{pushBtn}</if>
+            <if test="icon != null  and icon != ''"> and icon = #{icon}</if>
+            <if test="deleteFlag != null  and deleteFlag != ''"> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectJshFunctionById" parameterType="Long" resultMap="JshFunctionResult">
+        <include refid="selectJshFunctionVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertJshFunction" parameterType="JshFunction" useGeneratedKeys="true" keyProperty="id">
+        insert into jsh_function
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="number != null">number,</if>
+            <if test="name != null">name,</if>
+            <if test="parentNumber != null">parent_number,</if>
+            <if test="url != null">url,</if>
+            <if test="component != null">component,</if>
+            <if test="state != null">state,</if>
+            <if test="sort != null">sort,</if>
+            <if test="enabled != null">enabled,</if>
+            <if test="type != null">type,</if>
+            <if test="pushBtn != null">push_btn,</if>
+            <if test="icon != null">icon,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="number != null">#{number},</if>
+            <if test="name != null">#{name},</if>
+            <if test="parentNumber != null">#{parentNumber},</if>
+            <if test="url != null">#{url},</if>
+            <if test="component != null">#{component},</if>
+            <if test="state != null">#{state},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="enabled != null">#{enabled},</if>
+            <if test="type != null">#{type},</if>
+            <if test="pushBtn != null">#{pushBtn},</if>
+            <if test="icon != null">#{icon},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJshFunction" parameterType="JshFunction">
+        update jsh_function
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null">number = #{number},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="parentNumber != null">parent_number = #{parentNumber},</if>
+            <if test="url != null">url = #{url},</if>
+            <if test="component != null">component = #{component},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="enabled != null">enabled = #{enabled},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="pushBtn != null">push_btn = #{pushBtn},</if>
+            <if test="icon != null">icon = #{icon},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteJshFunctionById" parameterType="Long">
+        delete from jsh_function where id = #{id}
+    </delete>
+
+    <delete id="deleteJshFunctionByIds" parameterType="String">
+        delete from jsh_function where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

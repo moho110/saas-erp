@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vrmlstudio.erp.mapper.JshLogMapper">
+    
+    <resultMap type="JshLog" id="JshLogResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="operation"    column="operation"    />
+        <result property="clientIp"    column="client_ip"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="status"    column="status"    />
+        <result property="content"    column="content"    />
+        <result property="tenantId"    column="tenant_id"    />
+    </resultMap>
+
+    <sql id="selectJshLogVo">
+        select id, user_id, operation, client_ip, create_time, status, content, tenant_id from jsh_log
+    </sql>
+
+    <select id="selectJshLogList" parameterType="JshLog" resultMap="JshLogResult">
+        <include refid="selectJshLogVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="operation != null  and operation != ''"> and operation = #{operation}</if>
+            <if test="clientIp != null  and clientIp != ''"> and client_ip = #{clientIp}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="tenantId != null "> and tenant_id = #{tenantId}</if>
+        </where>
+    </select>
+    
+    <select id="selectJshLogById" parameterType="Long" resultMap="JshLogResult">
+        <include refid="selectJshLogVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertJshLog" parameterType="JshLog" useGeneratedKeys="true" keyProperty="id">
+        insert into jsh_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="operation != null">operation,</if>
+            <if test="clientIp != null">client_ip,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="status != null">status,</if>
+            <if test="content != null">content,</if>
+            <if test="tenantId != null">tenant_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="operation != null">#{operation},</if>
+            <if test="clientIp != null">#{clientIp},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="status != null">#{status},</if>
+            <if test="content != null">#{content},</if>
+            <if test="tenantId != null">#{tenantId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJshLog" parameterType="JshLog">
+        update jsh_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="operation != null">operation = #{operation},</if>
+            <if test="clientIp != null">client_ip = #{clientIp},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="tenantId != null">tenant_id = #{tenantId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteJshLogById" parameterType="Long">
+        delete from jsh_log where id = #{id}
+    </delete>
+
+    <delete id="deleteJshLogByIds" parameterType="String">
+        delete from jsh_log where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

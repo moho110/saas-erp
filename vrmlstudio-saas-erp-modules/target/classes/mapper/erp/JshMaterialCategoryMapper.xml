@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vrmlstudio.erp.mapper.JshMaterialCategoryMapper">
+    
+    <resultMap type="JshMaterialCategory" id="JshMaterialCategoryResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="categoryLevel"    column="category_level"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="sort"    column="sort"    />
+        <result property="serialNo"    column="serial_no"    />
+        <result property="remark"    column="remark"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="tenantId"    column="tenant_id"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectJshMaterialCategoryVo">
+        select id, name, category_level, parent_id, sort, serial_no, remark, create_time, update_time, tenant_id, delete_flag from jsh_material_category
+    </sql>
+
+    <select id="selectJshMaterialCategoryList" parameterType="JshMaterialCategory" resultMap="JshMaterialCategoryResult">
+        <include refid="selectJshMaterialCategoryVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="categoryLevel != null "> and category_level = #{categoryLevel}</if>
+            <if test="parentId != null "> and parent_id = #{parentId}</if>
+            <if test="sort != null  and sort != ''"> and sort = #{sort}</if>
+            <if test="serialNo != null  and serialNo != ''"> and serial_no = #{serialNo}</if>
+            <if test="tenantId != null "> and tenant_id = #{tenantId}</if>
+            <if test="deleteFlag != null  and deleteFlag != ''"> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectJshMaterialCategoryById" parameterType="Long" resultMap="JshMaterialCategoryResult">
+        <include refid="selectJshMaterialCategoryVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertJshMaterialCategory" parameterType="JshMaterialCategory" useGeneratedKeys="true" keyProperty="id">
+        insert into jsh_material_category
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="categoryLevel != null">category_level,</if>
+            <if test="parentId != null">parent_id,</if>
+            <if test="sort != null">sort,</if>
+            <if test="serialNo != null">serial_no,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="tenantId != null">tenant_id,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="categoryLevel != null">#{categoryLevel},</if>
+            <if test="parentId != null">#{parentId},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="serialNo != null">#{serialNo},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="tenantId != null">#{tenantId},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJshMaterialCategory" parameterType="JshMaterialCategory">
+        update jsh_material_category
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="categoryLevel != null">category_level = #{categoryLevel},</if>
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="serialNo != null">serial_no = #{serialNo},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="tenantId != null">tenant_id = #{tenantId},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteJshMaterialCategoryById" parameterType="Long">
+        delete from jsh_material_category where id = #{id}
+    </delete>
+
+    <delete id="deleteJshMaterialCategoryByIds" parameterType="String">
+        delete from jsh_material_category where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

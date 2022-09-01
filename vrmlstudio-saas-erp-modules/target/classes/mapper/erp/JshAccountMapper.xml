@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vrmlstudio.erp.mapper.JshAccountMapper">
+    
+    <resultMap type="JshAccount" id="JshAccountResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="serialNo"    column="serial_no"    />
+        <result property="initialAmount"    column="initial_amount"    />
+        <result property="currentAmount"    column="current_amount"    />
+        <result property="remark"    column="remark"    />
+        <result property="isDefault"    column="is_default"    />
+        <result property="tenantId"    column="tenant_id"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectJshAccountVo">
+        select id, name, serial_no, initial_amount, current_amount, remark, is_default, tenant_id, delete_flag from jsh_account
+    </sql>
+
+    <select id="selectJshAccountList" parameterType="JshAccount" resultMap="JshAccountResult">
+        <include refid="selectJshAccountVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="serialNo != null  and serialNo != ''"> and serial_no = #{serialNo}</if>
+            <if test="initialAmount != null "> and initial_amount = #{initialAmount}</if>
+            <if test="currentAmount != null "> and current_amount = #{currentAmount}</if>
+            <if test="isDefault != null "> and is_default = #{isDefault}</if>
+            <if test="tenantId != null "> and tenant_id = #{tenantId}</if>
+            <if test="deleteFlag != null  and deleteFlag != ''"> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectJshAccountById" parameterType="Long" resultMap="JshAccountResult">
+        <include refid="selectJshAccountVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertJshAccount" parameterType="JshAccount" useGeneratedKeys="true" keyProperty="id">
+        insert into jsh_account
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="serialNo != null">serial_no,</if>
+            <if test="initialAmount != null">initial_amount,</if>
+            <if test="currentAmount != null">current_amount,</if>
+            <if test="remark != null">remark,</if>
+            <if test="isDefault != null">is_default,</if>
+            <if test="tenantId != null">tenant_id,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="serialNo != null">#{serialNo},</if>
+            <if test="initialAmount != null">#{initialAmount},</if>
+            <if test="currentAmount != null">#{currentAmount},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="isDefault != null">#{isDefault},</if>
+            <if test="tenantId != null">#{tenantId},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJshAccount" parameterType="JshAccount">
+        update jsh_account
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="serialNo != null">serial_no = #{serialNo},</if>
+            <if test="initialAmount != null">initial_amount = #{initialAmount},</if>
+            <if test="currentAmount != null">current_amount = #{currentAmount},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="isDefault != null">is_default = #{isDefault},</if>
+            <if test="tenantId != null">tenant_id = #{tenantId},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteJshAccountById" parameterType="Long">
+        delete from jsh_account where id = #{id}
+    </delete>
+
+    <delete id="deleteJshAccountByIds" parameterType="String">
+        delete from jsh_account where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

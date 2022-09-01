@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vrmlstudio.erp.mapper.JshSerialNumberMapper">
+    
+    <resultMap type="JshSerialNumber" id="JshSerialNumberResult">
+        <result property="id"    column="id"    />
+        <result property="materialId"    column="material_id"    />
+        <result property="depotId"    column="depot_id"    />
+        <result property="serialNumber"    column="serial_number"    />
+        <result property="isSell"    column="is_sell"    />
+        <result property="remark"    column="remark"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="creator"    column="creator"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updater"    column="updater"    />
+        <result property="inBillNo"    column="in_bill_no"    />
+        <result property="outBillNo"    column="out_bill_no"    />
+        <result property="tenantId"    column="tenant_id"    />
+    </resultMap>
+
+    <sql id="selectJshSerialNumberVo">
+        select id, material_id, depot_id, serial_number, is_sell, remark, delete_flag, create_time, creator, update_time, updater, in_bill_no, out_bill_no, tenant_id from jsh_serial_number
+    </sql>
+
+    <select id="selectJshSerialNumberList" parameterType="JshSerialNumber" resultMap="JshSerialNumberResult">
+        <include refid="selectJshSerialNumberVo"/>
+        <where>  
+            <if test="materialId != null "> and material_id = #{materialId}</if>
+            <if test="depotId != null "> and depot_id = #{depotId}</if>
+            <if test="serialNumber != null  and serialNumber != ''"> and serial_number = #{serialNumber}</if>
+            <if test="isSell != null  and isSell != ''"> and is_sell = #{isSell}</if>
+            <if test="deleteFlag != null  and deleteFlag != ''"> and delete_flag = #{deleteFlag}</if>
+            <if test="creator != null "> and creator = #{creator}</if>
+            <if test="updater != null "> and updater = #{updater}</if>
+            <if test="inBillNo != null  and inBillNo != ''"> and in_bill_no = #{inBillNo}</if>
+            <if test="outBillNo != null  and outBillNo != ''"> and out_bill_no = #{outBillNo}</if>
+            <if test="tenantId != null "> and tenant_id = #{tenantId}</if>
+        </where>
+    </select>
+    
+    <select id="selectJshSerialNumberById" parameterType="Long" resultMap="JshSerialNumberResult">
+        <include refid="selectJshSerialNumberVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertJshSerialNumber" parameterType="JshSerialNumber" useGeneratedKeys="true" keyProperty="id">
+        insert into jsh_serial_number
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="materialId != null">material_id,</if>
+            <if test="depotId != null">depot_id,</if>
+            <if test="serialNumber != null">serial_number,</if>
+            <if test="isSell != null">is_sell,</if>
+            <if test="remark != null">remark,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="creator != null">creator,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updater != null">updater,</if>
+            <if test="inBillNo != null">in_bill_no,</if>
+            <if test="outBillNo != null">out_bill_no,</if>
+            <if test="tenantId != null">tenant_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="materialId != null">#{materialId},</if>
+            <if test="depotId != null">#{depotId},</if>
+            <if test="serialNumber != null">#{serialNumber},</if>
+            <if test="isSell != null">#{isSell},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="creator != null">#{creator},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updater != null">#{updater},</if>
+            <if test="inBillNo != null">#{inBillNo},</if>
+            <if test="outBillNo != null">#{outBillNo},</if>
+            <if test="tenantId != null">#{tenantId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJshSerialNumber" parameterType="JshSerialNumber">
+        update jsh_serial_number
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="materialId != null">material_id = #{materialId},</if>
+            <if test="depotId != null">depot_id = #{depotId},</if>
+            <if test="serialNumber != null">serial_number = #{serialNumber},</if>
+            <if test="isSell != null">is_sell = #{isSell},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="creator != null">creator = #{creator},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updater != null">updater = #{updater},</if>
+            <if test="inBillNo != null">in_bill_no = #{inBillNo},</if>
+            <if test="outBillNo != null">out_bill_no = #{outBillNo},</if>
+            <if test="tenantId != null">tenant_id = #{tenantId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteJshSerialNumberById" parameterType="Long">
+        delete from jsh_serial_number where id = #{id}
+    </delete>
+
+    <delete id="deleteJshSerialNumberByIds" parameterType="String">
+        delete from jsh_serial_number where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

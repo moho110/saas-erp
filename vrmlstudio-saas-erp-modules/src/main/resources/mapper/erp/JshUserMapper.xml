@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vrmlstudio.erp.mapper.JshUserMapper">
+    
+    <resultMap type="JshUser" id="JshUserResult">
+        <result property="id"    column="id"    />
+        <result property="username"    column="username"    />
+        <result property="loginName"    column="login_name"    />
+        <result property="password"    column="password"    />
+        <result property="position"    column="position"    />
+        <result property="department"    column="department"    />
+        <result property="email"    column="email"    />
+        <result property="phonenum"    column="phonenum"    />
+        <result property="ismanager"    column="ismanager"    />
+        <result property="isystem"    column="isystem"    />
+        <result property="status"    column="Status"    />
+        <result property="description"    column="description"    />
+        <result property="remark"    column="remark"    />
+        <result property="tenantId"    column="tenant_id"    />
+    </resultMap>
+
+    <sql id="selectJshUserVo">
+        select id, username, login_name, password, position, department, email, phonenum, ismanager, isystem, Status, description, remark, tenant_id from jsh_user
+    </sql>
+
+    <select id="selectJshUserList" parameterType="JshUser" resultMap="JshUserResult">
+        <include refid="selectJshUserVo"/>
+        <where>  
+            <if test="username != null  and username != ''"> and username like concat('%', #{username}, '%')</if>
+            <if test="loginName != null  and loginName != ''"> and login_name like concat('%', #{loginName}, '%')</if>
+            <if test="password != null  and password != ''"> and password = #{password}</if>
+            <if test="position != null  and position != ''"> and position = #{position}</if>
+            <if test="department != null  and department != ''"> and department = #{department}</if>
+            <if test="email != null  and email != ''"> and email = #{email}</if>
+            <if test="phonenum != null  and phonenum != ''"> and phonenum = #{phonenum}</if>
+            <if test="ismanager != null "> and ismanager = #{ismanager}</if>
+            <if test="isystem != null "> and isystem = #{isystem}</if>
+            <if test="status != null "> and Status = #{status}</if>
+            <if test="description != null  and description != ''"> and description = #{description}</if>
+            <if test="tenantId != null "> and tenant_id = #{tenantId}</if>
+        </where>
+    </select>
+    
+    <select id="selectJshUserById" parameterType="Long" resultMap="JshUserResult">
+        <include refid="selectJshUserVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertJshUser" parameterType="JshUser" useGeneratedKeys="true" keyProperty="id">
+        insert into jsh_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null and username != ''">username,</if>
+            <if test="loginName != null and loginName != ''">login_name,</if>
+            <if test="password != null">password,</if>
+            <if test="position != null">position,</if>
+            <if test="department != null">department,</if>
+            <if test="email != null">email,</if>
+            <if test="phonenum != null">phonenum,</if>
+            <if test="ismanager != null">ismanager,</if>
+            <if test="isystem != null">isystem,</if>
+            <if test="status != null">Status,</if>
+            <if test="description != null">description,</if>
+            <if test="remark != null">remark,</if>
+            <if test="tenantId != null">tenant_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="username != null and username != ''">#{username},</if>
+            <if test="loginName != null and loginName != ''">#{loginName},</if>
+            <if test="password != null">#{password},</if>
+            <if test="position != null">#{position},</if>
+            <if test="department != null">#{department},</if>
+            <if test="email != null">#{email},</if>
+            <if test="phonenum != null">#{phonenum},</if>
+            <if test="ismanager != null">#{ismanager},</if>
+            <if test="isystem != null">#{isystem},</if>
+            <if test="status != null">#{status},</if>
+            <if test="description != null">#{description},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="tenantId != null">#{tenantId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJshUser" parameterType="JshUser">
+        update jsh_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="username != null and username != ''">username = #{username},</if>
+            <if test="loginName != null and loginName != ''">login_name = #{loginName},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="position != null">position = #{position},</if>
+            <if test="department != null">department = #{department},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="phonenum != null">phonenum = #{phonenum},</if>
+            <if test="ismanager != null">ismanager = #{ismanager},</if>
+            <if test="isystem != null">isystem = #{isystem},</if>
+            <if test="status != null">Status = #{status},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="tenantId != null">tenant_id = #{tenantId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteJshUserById" parameterType="Long">
+        delete from jsh_user where id = #{id}
+    </delete>
+
+    <delete id="deleteJshUserByIds" parameterType="String">
+        delete from jsh_user where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

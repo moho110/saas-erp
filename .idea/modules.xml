@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/saas-erp.iml" filepath="$PROJECT_DIR$/saas-erp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vrmlstudio-admin/vrmlstudio-admin.iml" filepath="$PROJECT_DIR$/vrmlstudio-admin/vrmlstudio-admin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vrmlstudio-common/vrmlstudio-common.iml" filepath="$PROJECT_DIR$/vrmlstudio-common/vrmlstudio-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vrmlstudio-crm/vrmlstudio-crm.iml" filepath="$PROJECT_DIR$/vrmlstudio-crm/vrmlstudio-crm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vrmlstudio-framework/vrmlstudio-framework.iml" filepath="$PROJECT_DIR$/vrmlstudio-framework/vrmlstudio-framework.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vrmlstudio-saas-erp-modules/vrmlstudio-saas-erp-modules.iml" filepath="$PROJECT_DIR$/vrmlstudio-saas-erp-modules/vrmlstudio-saas-erp-modules.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vrmlstudio-system/vrmlstudio-system.iml" filepath="$PROJECT_DIR$/vrmlstudio-system/vrmlstudio-system.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vrmlstudio-tenant/vrmlstudio-tenant.iml" filepath="$PROJECT_DIR$/vrmlstudio-tenant/vrmlstudio-tenant.iml" />
+    </modules>
+  </component>
+</project>

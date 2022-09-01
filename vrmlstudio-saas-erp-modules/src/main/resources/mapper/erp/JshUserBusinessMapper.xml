@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vrmlstudio.erp.mapper.JshUserBusinessMapper">
+    
+    <resultMap type="JshUserBusiness" id="JshUserBusinessResult">
+        <result property="id"    column="id"    />
+        <result property="type"    column="type"    />
+        <result property="keyId"    column="key_id"    />
+        <result property="value"    column="value"    />
+        <result property="btnStr"    column="btn_str"    />
+        <result property="tenantId"    column="tenant_id"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectJshUserBusinessVo">
+        select id, type, key_id, value, btn_str, tenant_id, delete_flag from jsh_user_business
+    </sql>
+
+    <select id="selectJshUserBusinessList" parameterType="JshUserBusiness" resultMap="JshUserBusinessResult">
+        <include refid="selectJshUserBusinessVo"/>
+        <where>  
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="keyId != null  and keyId != ''"> and key_id = #{keyId}</if>
+            <if test="value != null  and value != ''"> and value = #{value}</if>
+            <if test="btnStr != null  and btnStr != ''"> and btn_str = #{btnStr}</if>
+            <if test="tenantId != null "> and tenant_id = #{tenantId}</if>
+            <if test="deleteFlag != null  and deleteFlag != ''"> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectJshUserBusinessById" parameterType="Long" resultMap="JshUserBusinessResult">
+        <include refid="selectJshUserBusinessVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertJshUserBusiness" parameterType="JshUserBusiness" useGeneratedKeys="true" keyProperty="id">
+        insert into jsh_user_business
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="type != null">type,</if>
+            <if test="keyId != null">key_id,</if>
+            <if test="value != null">value,</if>
+            <if test="btnStr != null">btn_str,</if>
+            <if test="tenantId != null">tenant_id,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="type != null">#{type},</if>
+            <if test="keyId != null">#{keyId},</if>
+            <if test="value != null">#{value},</if>
+            <if test="btnStr != null">#{btnStr},</if>
+            <if test="tenantId != null">#{tenantId},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJshUserBusiness" parameterType="JshUserBusiness">
+        update jsh_user_business
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null">type = #{type},</if>
+            <if test="keyId != null">key_id = #{keyId},</if>
+            <if test="value != null">value = #{value},</if>
+            <if test="btnStr != null">btn_str = #{btnStr},</if>
+            <if test="tenantId != null">tenant_id = #{tenantId},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteJshUserBusinessById" parameterType="Long">
+        delete from jsh_user_business where id = #{id}
+    </delete>
+
+    <delete id="deleteJshUserBusinessByIds" parameterType="String">
+        delete from jsh_user_business where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

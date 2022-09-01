@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vrmlstudio.erp.mapper.JshMaterialAttributeMapper">
+    
+    <resultMap type="JshMaterialAttribute" id="JshMaterialAttributeResult">
+        <result property="id"    column="id"    />
+        <result property="attributeField"    column="attribute_field"    />
+        <result property="attributeName"    column="attribute_name"    />
+        <result property="attributeValue"    column="attribute_value"    />
+        <result property="tenantId"    column="tenant_id"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectJshMaterialAttributeVo">
+        select id, attribute_field, attribute_name, attribute_value, tenant_id, delete_flag from jsh_material_attribute
+    </sql>
+
+    <select id="selectJshMaterialAttributeList" parameterType="JshMaterialAttribute" resultMap="JshMaterialAttributeResult">
+        <include refid="selectJshMaterialAttributeVo"/>
+        <where>  
+            <if test="attributeField != null  and attributeField != ''"> and attribute_field = #{attributeField}</if>
+            <if test="attributeName != null  and attributeName != ''"> and attribute_name like concat('%', #{attributeName}, '%')</if>
+            <if test="attributeValue != null  and attributeValue != ''"> and attribute_value = #{attributeValue}</if>
+            <if test="tenantId != null "> and tenant_id = #{tenantId}</if>
+            <if test="deleteFlag != null  and deleteFlag != ''"> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectJshMaterialAttributeById" parameterType="Long" resultMap="JshMaterialAttributeResult">
+        <include refid="selectJshMaterialAttributeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertJshMaterialAttribute" parameterType="JshMaterialAttribute" useGeneratedKeys="true" keyProperty="id">
+        insert into jsh_material_attribute
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="attributeField != null">attribute_field,</if>
+            <if test="attributeName != null">attribute_name,</if>
+            <if test="attributeValue != null">attribute_value,</if>
+            <if test="tenantId != null">tenant_id,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="attributeField != null">#{attributeField},</if>
+            <if test="attributeName != null">#{attributeName},</if>
+            <if test="attributeValue != null">#{attributeValue},</if>
+            <if test="tenantId != null">#{tenantId},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJshMaterialAttribute" parameterType="JshMaterialAttribute">
+        update jsh_material_attribute
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="attributeField != null">attribute_field = #{attributeField},</if>
+            <if test="attributeName != null">attribute_name = #{attributeName},</if>
+            <if test="attributeValue != null">attribute_value = #{attributeValue},</if>
+            <if test="tenantId != null">tenant_id = #{tenantId},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteJshMaterialAttributeById" parameterType="Long">
+        delete from jsh_material_attribute where id = #{id}
+    </delete>
+
+    <delete id="deleteJshMaterialAttributeByIds" parameterType="String">
+        delete from jsh_material_attribute where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vrmlstudio.erp.mapper.JshMaterialPropertyMapper">
+    
+    <resultMap type="JshMaterialProperty" id="JshMaterialPropertyResult">
+        <result property="id"    column="id"    />
+        <result property="nativeName"    column="native_name"    />
+        <result property="enabled"    column="enabled"    />
+        <result property="sort"    column="sort"    />
+        <result property="anotherName"    column="another_name"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectJshMaterialPropertyVo">
+        select id, native_name, enabled, sort, another_name, delete_flag from jsh_material_property
+    </sql>
+
+    <select id="selectJshMaterialPropertyList" parameterType="JshMaterialProperty" resultMap="JshMaterialPropertyResult">
+        <include refid="selectJshMaterialPropertyVo"/>
+        <where>  
+            <if test="nativeName != null  and nativeName != ''"> and native_name like concat('%', #{nativeName}, '%')</if>
+            <if test="enabled != null "> and enabled = #{enabled}</if>
+            <if test="sort != null  and sort != ''"> and sort = #{sort}</if>
+            <if test="anotherName != null  and anotherName != ''"> and another_name like concat('%', #{anotherName}, '%')</if>
+            <if test="deleteFlag != null  and deleteFlag != ''"> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectJshMaterialPropertyById" parameterType="Long" resultMap="JshMaterialPropertyResult">
+        <include refid="selectJshMaterialPropertyVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertJshMaterialProperty" parameterType="JshMaterialProperty" useGeneratedKeys="true" keyProperty="id">
+        insert into jsh_material_property
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="nativeName != null">native_name,</if>
+            <if test="enabled != null">enabled,</if>
+            <if test="sort != null">sort,</if>
+            <if test="anotherName != null">another_name,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="nativeName != null">#{nativeName},</if>
+            <if test="enabled != null">#{enabled},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="anotherName != null">#{anotherName},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJshMaterialProperty" parameterType="JshMaterialProperty">
+        update jsh_material_property
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="nativeName != null">native_name = #{nativeName},</if>
+            <if test="enabled != null">enabled = #{enabled},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="anotherName != null">another_name = #{anotherName},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteJshMaterialPropertyById" parameterType="Long">
+        delete from jsh_material_property where id = #{id}
+    </delete>
+
+    <delete id="deleteJshMaterialPropertyByIds" parameterType="String">
+        delete from jsh_material_property where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

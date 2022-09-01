@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="vrmlstudio-admin" />
+        <module name="vrmlstudio-system" />
+        <module name="vrmlstudio-tenant" />
+        <module name="vrmlstudio-crm" />
+        <module name="vrmlstudio-framework" />
+        <module name="vrmlstudio-saas-erp-modules" />
+        <module name="vrmlstudio-common" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="saas-erp" target="1.8" />
+      <module name="vrmlstudio-admin" target="1.8" />
+      <module name="vrmlstudio-common" target="1.8" />
+      <module name="vrmlstudio-crm" target="1.8" />
+      <module name="vrmlstudio-framework" target="1.8" />
+      <module name="vrmlstudio-saas-erp-modules" target="1.8" />
+      <module name="vrmlstudio-system" target="1.8" />
+      <module name="vrmlstudio-tenant" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

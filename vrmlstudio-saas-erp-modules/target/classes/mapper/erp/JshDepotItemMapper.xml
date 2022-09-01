@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vrmlstudio.erp.mapper.JshDepotItemMapper">
+    
+    <resultMap type="JshDepotItem" id="JshDepotItemResult">
+        <result property="id"    column="id"    />
+        <result property="headerId"    column="header_id"    />
+        <result property="materialId"    column="material_id"    />
+        <result property="materialExtendId"    column="material_extend_id"    />
+        <result property="materialUnit"    column="material_unit"    />
+        <result property="sku"    column="sku"    />
+        <result property="operNumber"    column="oper_number"    />
+        <result property="basicNumber"    column="basic_number"    />
+        <result property="unitPrice"    column="unit_price"    />
+        <result property="taxUnitPrice"    column="tax_unit_price"    />
+        <result property="allPrice"    column="all_price"    />
+        <result property="remark"    column="remark"    />
+        <result property="depotId"    column="depot_id"    />
+        <result property="anotherDepotId"    column="another_depot_id"    />
+        <result property="taxRate"    column="tax_rate"    />
+        <result property="taxMoney"    column="tax_money"    />
+        <result property="taxLastMoney"    column="tax_last_money"    />
+        <result property="materialType"    column="material_type"    />
+        <result property="snList"    column="sn_list"    />
+        <result property="batchNumber"    column="batch_number"    />
+        <result property="expirationDate"    column="expiration_date"    />
+        <result property="linkId"    column="link_id"    />
+        <result property="tenantId"    column="tenant_id"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectJshDepotItemVo">
+        select id, header_id, material_id, material_extend_id, material_unit, sku, oper_number, basic_number, unit_price, tax_unit_price, all_price, remark, depot_id, another_depot_id, tax_rate, tax_money, tax_last_money, material_type, sn_list, batch_number, expiration_date, link_id, tenant_id, delete_flag from jsh_depot_item
+    </sql>
+
+    <select id="selectJshDepotItemList" parameterType="JshDepotItem" resultMap="JshDepotItemResult">
+        <include refid="selectJshDepotItemVo"/>
+        <where>  
+            <if test="headerId != null "> and header_id = #{headerId}</if>
+            <if test="materialId != null "> and material_id = #{materialId}</if>
+            <if test="materialExtendId != null "> and material_extend_id = #{materialExtendId}</if>
+            <if test="materialUnit != null  and materialUnit != ''"> and material_unit = #{materialUnit}</if>
+            <if test="sku != null  and sku != ''"> and sku = #{sku}</if>
+            <if test="operNumber != null "> and oper_number = #{operNumber}</if>
+            <if test="basicNumber != null "> and basic_number = #{basicNumber}</if>
+            <if test="unitPrice != null "> and unit_price = #{unitPrice}</if>
+            <if test="taxUnitPrice != null "> and tax_unit_price = #{taxUnitPrice}</if>
+            <if test="allPrice != null "> and all_price = #{allPrice}</if>
+            <if test="depotId != null "> and depot_id = #{depotId}</if>
+            <if test="anotherDepotId != null "> and another_depot_id = #{anotherDepotId}</if>
+            <if test="taxRate != null "> and tax_rate = #{taxRate}</if>
+            <if test="taxMoney != null "> and tax_money = #{taxMoney}</if>
+            <if test="taxLastMoney != null "> and tax_last_money = #{taxLastMoney}</if>
+            <if test="materialType != null  and materialType != ''"> and material_type = #{materialType}</if>
+            <if test="snList != null  and snList != ''"> and sn_list = #{snList}</if>
+            <if test="batchNumber != null  and batchNumber != ''"> and batch_number = #{batchNumber}</if>
+            <if test="expirationDate != null "> and expiration_date = #{expirationDate}</if>
+            <if test="linkId != null "> and link_id = #{linkId}</if>
+            <if test="tenantId != null "> and tenant_id = #{tenantId}</if>
+            <if test="deleteFlag != null  and deleteFlag != ''"> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectJshDepotItemById" parameterType="Long" resultMap="JshDepotItemResult">
+        <include refid="selectJshDepotItemVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertJshDepotItem" parameterType="JshDepotItem" useGeneratedKeys="true" keyProperty="id">
+        insert into jsh_depot_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="headerId != null">header_id,</if>
+            <if test="materialId != null">material_id,</if>
+            <if test="materialExtendId != null">material_extend_id,</if>
+            <if test="materialUnit != null">material_unit,</if>
+            <if test="sku != null">sku,</if>
+            <if test="operNumber != null">oper_number,</if>
+            <if test="basicNumber != null">basic_number,</if>
+            <if test="unitPrice != null">unit_price,</if>
+            <if test="taxUnitPrice != null">tax_unit_price,</if>
+            <if test="allPrice != null">all_price,</if>
+            <if test="remark != null">remark,</if>
+            <if test="depotId != null">depot_id,</if>
+            <if test="anotherDepotId != null">another_depot_id,</if>
+            <if test="taxRate != null">tax_rate,</if>
+            <if test="taxMoney != null">tax_money,</if>
+            <if test="taxLastMoney != null">tax_last_money,</if>
+            <if test="materialType != null">material_type,</if>
+            <if test="snList != null">sn_list,</if>
+            <if test="batchNumber != null">batch_number,</if>
+            <if test="expirationDate != null">expiration_date,</if>
+            <if test="linkId != null">link_id,</if>
+            <if test="tenantId != null">tenant_id,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="headerId != null">#{headerId},</if>
+            <if test="materialId != null">#{materialId},</if>
+            <if test="materialExtendId != null">#{materialExtendId},</if>
+            <if test="materialUnit != null">#{materialUnit},</if>
+            <if test="sku != null">#{sku},</if>
+            <if test="operNumber != null">#{operNumber},</if>
+            <if test="basicNumber != null">#{basicNumber},</if>
+            <if test="unitPrice != null">#{unitPrice},</if>
+            <if test="taxUnitPrice != null">#{taxUnitPrice},</if>
+            <if test="allPrice != null">#{allPrice},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="depotId != null">#{depotId},</if>
+            <if test="anotherDepotId != null">#{anotherDepotId},</if>
+            <if test="taxRate != null">#{taxRate},</if>
+            <if test="taxMoney != null">#{taxMoney},</if>
+            <if test="taxLastMoney != null">#{taxLastMoney},</if>
+            <if test="materialType != null">#{materialType},</if>
+            <if test="snList != null">#{snList},</if>
+            <if test="batchNumber != null">#{batchNumber},</if>
+            <if test="expirationDate != null">#{expirationDate},</if>
+            <if test="linkId != null">#{linkId},</if>
+            <if test="tenantId != null">#{tenantId},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJshDepotItem" parameterType="JshDepotItem">
+        update jsh_depot_item
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="headerId != null">header_id = #{headerId},</if>
+            <if test="materialId != null">material_id = #{materialId},</if>
+            <if test="materialExtendId != null">material_extend_id = #{materialExtendId},</if>
+            <if test="materialUnit != null">material_unit = #{materialUnit},</if>
+            <if test="sku != null">sku = #{sku},</if>
+            <if test="operNumber != null">oper_number = #{operNumber},</if>
+            <if test="basicNumber != null">basic_number = #{basicNumber},</if>
+            <if test="unitPrice != null">unit_price = #{unitPrice},</if>
+            <if test="taxUnitPrice != null">tax_unit_price = #{taxUnitPrice},</if>
+            <if test="allPrice != null">all_price = #{allPrice},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="depotId != null">depot_id = #{depotId},</if>
+            <if test="anotherDepotId != null">another_depot_id = #{anotherDepotId},</if>
+            <if test="taxRate != null">tax_rate = #{taxRate},</if>
+            <if test="taxMoney != null">tax_money = #{taxMoney},</if>
+            <if test="taxLastMoney != null">tax_last_money = #{taxLastMoney},</if>
+            <if test="materialType != null">material_type = #{materialType},</if>
+            <if test="snList != null">sn_list = #{snList},</if>
+            <if test="batchNumber != null">batch_number = #{batchNumber},</if>
+            <if test="expirationDate != null">expiration_date = #{expirationDate},</if>
+            <if test="linkId != null">link_id = #{linkId},</if>
+            <if test="tenantId != null">tenant_id = #{tenantId},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteJshDepotItemById" parameterType="Long">
+        delete from jsh_depot_item where id = #{id}
+    </delete>
+
+    <delete id="deleteJshDepotItemByIds" parameterType="String">
+        delete from jsh_depot_item where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

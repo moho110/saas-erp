@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vrmlstudio.erp.mapper.JshPersonMapper">
+    
+    <resultMap type="JshPerson" id="JshPersonResult">
+        <result property="id"    column="id"    />
+        <result property="type"    column="type"    />
+        <result property="name"    column="name"    />
+        <result property="tenantId"    column="tenant_id"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectJshPersonVo">
+        select id, type, name, tenant_id, delete_flag from jsh_person
+    </sql>
+
+    <select id="selectJshPersonList" parameterType="JshPerson" resultMap="JshPersonResult">
+        <include refid="selectJshPersonVo"/>
+        <where>  
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="tenantId != null "> and tenant_id = #{tenantId}</if>
+            <if test="deleteFlag != null  and deleteFlag != ''"> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectJshPersonById" parameterType="Long" resultMap="JshPersonResult">
+        <include refid="selectJshPersonVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertJshPerson" parameterType="JshPerson" useGeneratedKeys="true" keyProperty="id">
+        insert into jsh_person
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="type != null">type,</if>
+            <if test="name != null">name,</if>
+            <if test="tenantId != null">tenant_id,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="type != null">#{type},</if>
+            <if test="name != null">#{name},</if>
+            <if test="tenantId != null">#{tenantId},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJshPerson" parameterType="JshPerson">
+        update jsh_person
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null">type = #{type},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="tenantId != null">tenant_id = #{tenantId},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteJshPersonById" parameterType="Long">
+        delete from jsh_person where id = #{id}
+    </delete>
+
+    <delete id="deleteJshPersonByIds" parameterType="String">
+        delete from jsh_person where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

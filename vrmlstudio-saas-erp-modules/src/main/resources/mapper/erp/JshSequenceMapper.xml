@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vrmlstudio.erp.mapper.JshSequenceMapper">
+    
+    <resultMap type="JshSequence" id="JshSequenceResult">
+        <result property="seqName"    column="seq_name"    />
+        <result property="minValue"    column="min_value"    />
+        <result property="maxValue"    column="max_value"    />
+        <result property="currentVal"    column="current_val"    />
+        <result property="incrementVal"    column="increment_val"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectJshSequenceVo">
+        select seq_name, min_value, max_value, current_val, increment_val, remark from jsh_sequence
+    </sql>
+
+    <select id="selectJshSequenceList" parameterType="JshSequence" resultMap="JshSequenceResult">
+        <include refid="selectJshSequenceVo"/>
+        <where>  
+            <if test="minValue != null "> and min_value = #{minValue}</if>
+            <if test="maxValue != null "> and max_value = #{maxValue}</if>
+            <if test="currentVal != null "> and current_val = #{currentVal}</if>
+            <if test="incrementVal != null "> and increment_val = #{incrementVal}</if>
+        </where>
+    </select>
+    
+    <select id="selectJshSequenceBySeqName" parameterType="String" resultMap="JshSequenceResult">
+        <include refid="selectJshSequenceVo"/>
+        where seq_name = #{seqName}
+    </select>
+        
+    <insert id="insertJshSequence" parameterType="JshSequence">
+        insert into jsh_sequence
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="seqName != null">seq_name,</if>
+            <if test="minValue != null">min_value,</if>
+            <if test="maxValue != null">max_value,</if>
+            <if test="currentVal != null">current_val,</if>
+            <if test="incrementVal != null">increment_val,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="seqName != null">#{seqName},</if>
+            <if test="minValue != null">#{minValue},</if>
+            <if test="maxValue != null">#{maxValue},</if>
+            <if test="currentVal != null">#{currentVal},</if>
+            <if test="incrementVal != null">#{incrementVal},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJshSequence" parameterType="JshSequence">
+        update jsh_sequence
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="minValue != null">min_value = #{minValue},</if>
+            <if test="maxValue != null">max_value = #{maxValue},</if>
+            <if test="currentVal != null">current_val = #{currentVal},</if>
+            <if test="incrementVal != null">increment_val = #{incrementVal},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where seq_name = #{seqName}
+    </update>
+
+    <delete id="deleteJshSequenceBySeqName" parameterType="String">
+        delete from jsh_sequence where seq_name = #{seqName}
+    </delete>
+
+    <delete id="deleteJshSequenceBySeqNames" parameterType="String">
+        delete from jsh_sequence where seq_name in 
+        <foreach item="seqName" collection="array" open="(" separator="," close=")">
+            #{seqName}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vrmlstudio.erp.mapper.JshPlatformConfigMapper">
+    
+    <resultMap type="JshPlatformConfig" id="JshPlatformConfigResult">
+        <result property="id"    column="id"    />
+        <result property="platformKey"    column="platform_key"    />
+        <result property="platformKeyInfo"    column="platform_key_info"    />
+        <result property="platformValue"    column="platform_value"    />
+    </resultMap>
+
+    <sql id="selectJshPlatformConfigVo">
+        select id, platform_key, platform_key_info, platform_value from jsh_platform_config
+    </sql>
+
+    <select id="selectJshPlatformConfigList" parameterType="JshPlatformConfig" resultMap="JshPlatformConfigResult">
+        <include refid="selectJshPlatformConfigVo"/>
+        <where>  
+            <if test="platformKey != null  and platformKey != ''"> and platform_key = #{platformKey}</if>
+            <if test="platformKeyInfo != null  and platformKeyInfo != ''"> and platform_key_info = #{platformKeyInfo}</if>
+            <if test="platformValue != null  and platformValue != ''"> and platform_value = #{platformValue}</if>
+        </where>
+    </select>
+    
+    <select id="selectJshPlatformConfigById" parameterType="Long" resultMap="JshPlatformConfigResult">
+        <include refid="selectJshPlatformConfigVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertJshPlatformConfig" parameterType="JshPlatformConfig" useGeneratedKeys="true" keyProperty="id">
+        insert into jsh_platform_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="platformKey != null">platform_key,</if>
+            <if test="platformKeyInfo != null">platform_key_info,</if>
+            <if test="platformValue != null">platform_value,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="platformKey != null">#{platformKey},</if>
+            <if test="platformKeyInfo != null">#{platformKeyInfo},</if>
+            <if test="platformValue != null">#{platformValue},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJshPlatformConfig" parameterType="JshPlatformConfig">
+        update jsh_platform_config
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="platformKey != null">platform_key = #{platformKey},</if>
+            <if test="platformKeyInfo != null">platform_key_info = #{platformKeyInfo},</if>
+            <if test="platformValue != null">platform_value = #{platformValue},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteJshPlatformConfigById" parameterType="Long">
+        delete from jsh_platform_config where id = #{id}
+    </delete>
+
+    <delete id="deleteJshPlatformConfigByIds" parameterType="String">
+        delete from jsh_platform_config where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

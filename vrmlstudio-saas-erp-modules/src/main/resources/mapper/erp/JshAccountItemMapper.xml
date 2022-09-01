@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vrmlstudio.erp.mapper.JshAccountItemMapper">
+    
+    <resultMap type="JshAccountItem" id="JshAccountItemResult">
+        <result property="id"    column="id"    />
+        <result property="headerId"    column="header_id"    />
+        <result property="accountId"    column="account_id"    />
+        <result property="inOutItemId"    column="in_out_item_id"    />
+        <result property="billId"    column="bill_id"    />
+        <result property="needDebt"    column="need_debt"    />
+        <result property="finishDebt"    column="finish_debt"    />
+        <result property="eachAmount"    column="each_amount"    />
+        <result property="remark"    column="remark"    />
+        <result property="tenantId"    column="tenant_id"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectJshAccountItemVo">
+        select id, header_id, account_id, in_out_item_id, bill_id, need_debt, finish_debt, each_amount, remark, tenant_id, delete_flag from jsh_account_item
+    </sql>
+
+    <select id="selectJshAccountItemList" parameterType="JshAccountItem" resultMap="JshAccountItemResult">
+        <include refid="selectJshAccountItemVo"/>
+        <where>  
+            <if test="headerId != null "> and header_id = #{headerId}</if>
+            <if test="accountId != null "> and account_id = #{accountId}</if>
+            <if test="inOutItemId != null "> and in_out_item_id = #{inOutItemId}</if>
+            <if test="billId != null "> and bill_id = #{billId}</if>
+            <if test="needDebt != null "> and need_debt = #{needDebt}</if>
+            <if test="finishDebt != null "> and finish_debt = #{finishDebt}</if>
+            <if test="eachAmount != null "> and each_amount = #{eachAmount}</if>
+            <if test="tenantId != null "> and tenant_id = #{tenantId}</if>
+            <if test="deleteFlag != null  and deleteFlag != ''"> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectJshAccountItemById" parameterType="Long" resultMap="JshAccountItemResult">
+        <include refid="selectJshAccountItemVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertJshAccountItem" parameterType="JshAccountItem" useGeneratedKeys="true" keyProperty="id">
+        insert into jsh_account_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="headerId != null">header_id,</if>
+            <if test="accountId != null">account_id,</if>
+            <if test="inOutItemId != null">in_out_item_id,</if>
+            <if test="billId != null">bill_id,</if>
+            <if test="needDebt != null">need_debt,</if>
+            <if test="finishDebt != null">finish_debt,</if>
+            <if test="eachAmount != null">each_amount,</if>
+            <if test="remark != null">remark,</if>
+            <if test="tenantId != null">tenant_id,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="headerId != null">#{headerId},</if>
+            <if test="accountId != null">#{accountId},</if>
+            <if test="inOutItemId != null">#{inOutItemId},</if>
+            <if test="billId != null">#{billId},</if>
+            <if test="needDebt != null">#{needDebt},</if>
+            <if test="finishDebt != null">#{finishDebt},</if>
+            <if test="eachAmount != null">#{eachAmount},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="tenantId != null">#{tenantId},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJshAccountItem" parameterType="JshAccountItem">
+        update jsh_account_item
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="headerId != null">header_id = #{headerId},</if>
+            <if test="accountId != null">account_id = #{accountId},</if>
+            <if test="inOutItemId != null">in_out_item_id = #{inOutItemId},</if>
+            <if test="billId != null">bill_id = #{billId},</if>
+            <if test="needDebt != null">need_debt = #{needDebt},</if>
+            <if test="finishDebt != null">finish_debt = #{finishDebt},</if>
+            <if test="eachAmount != null">each_amount = #{eachAmount},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="tenantId != null">tenant_id = #{tenantId},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteJshAccountItemById" parameterType="Long">
+        delete from jsh_account_item where id = #{id}
+    </delete>
+
+    <delete id="deleteJshAccountItemByIds" parameterType="String">
+        delete from jsh_account_item where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vrmlstudio.erp.mapper.JshAccountHeadMapper">
+    
+    <resultMap type="JshAccountHead" id="JshAccountHeadResult">
+        <result property="id"    column="id"    />
+        <result property="type"    column="type"    />
+        <result property="organId"    column="organ_id"    />
+        <result property="handsPersonId"    column="hands_person_id"    />
+        <result property="creator"    column="creator"    />
+        <result property="changeAmount"    column="change_amount"    />
+        <result property="discountMoney"    column="discount_money"    />
+        <result property="totalPrice"    column="total_price"    />
+        <result property="accountId"    column="account_id"    />
+        <result property="billNo"    column="bill_no"    />
+        <result property="billTime"    column="bill_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="fileName"    column="file_name"    />
+        <result property="status"    column="status"    />
+        <result property="tenantId"    column="tenant_id"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectJshAccountHeadVo">
+        select id, type, organ_id, hands_person_id, creator, change_amount, discount_money, total_price, account_id, bill_no, bill_time, remark, file_name, status, tenant_id, delete_flag from jsh_account_head
+    </sql>
+
+    <select id="selectJshAccountHeadList" parameterType="JshAccountHead" resultMap="JshAccountHeadResult">
+        <include refid="selectJshAccountHeadVo"/>
+        <where>  
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="organId != null "> and organ_id = #{organId}</if>
+            <if test="handsPersonId != null "> and hands_person_id = #{handsPersonId}</if>
+            <if test="creator != null "> and creator = #{creator}</if>
+            <if test="changeAmount != null "> and change_amount = #{changeAmount}</if>
+            <if test="discountMoney != null "> and discount_money = #{discountMoney}</if>
+            <if test="totalPrice != null "> and total_price = #{totalPrice}</if>
+            <if test="accountId != null "> and account_id = #{accountId}</if>
+            <if test="billNo != null  and billNo != ''"> and bill_no = #{billNo}</if>
+            <if test="billTime != null "> and bill_time = #{billTime}</if>
+            <if test="fileName != null  and fileName != ''"> and file_name like concat('%', #{fileName}, '%')</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="tenantId != null "> and tenant_id = #{tenantId}</if>
+            <if test="deleteFlag != null  and deleteFlag != ''"> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectJshAccountHeadById" parameterType="Long" resultMap="JshAccountHeadResult">
+        <include refid="selectJshAccountHeadVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertJshAccountHead" parameterType="JshAccountHead" useGeneratedKeys="true" keyProperty="id">
+        insert into jsh_account_head
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="type != null">type,</if>
+            <if test="organId != null">organ_id,</if>
+            <if test="handsPersonId != null">hands_person_id,</if>
+            <if test="creator != null">creator,</if>
+            <if test="changeAmount != null">change_amount,</if>
+            <if test="discountMoney != null">discount_money,</if>
+            <if test="totalPrice != null">total_price,</if>
+            <if test="accountId != null">account_id,</if>
+            <if test="billNo != null">bill_no,</if>
+            <if test="billTime != null">bill_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="fileName != null">file_name,</if>
+            <if test="status != null">status,</if>
+            <if test="tenantId != null">tenant_id,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="type != null">#{type},</if>
+            <if test="organId != null">#{organId},</if>
+            <if test="handsPersonId != null">#{handsPersonId},</if>
+            <if test="creator != null">#{creator},</if>
+            <if test="changeAmount != null">#{changeAmount},</if>
+            <if test="discountMoney != null">#{discountMoney},</if>
+            <if test="totalPrice != null">#{totalPrice},</if>
+            <if test="accountId != null">#{accountId},</if>
+            <if test="billNo != null">#{billNo},</if>
+            <if test="billTime != null">#{billTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="fileName != null">#{fileName},</if>
+            <if test="status != null">#{status},</if>
+            <if test="tenantId != null">#{tenantId},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJshAccountHead" parameterType="JshAccountHead">
+        update jsh_account_head
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null">type = #{type},</if>
+            <if test="organId != null">organ_id = #{organId},</if>
+            <if test="handsPersonId != null">hands_person_id = #{handsPersonId},</if>
+            <if test="creator != null">creator = #{creator},</if>
+            <if test="changeAmount != null">change_amount = #{changeAmount},</if>
+            <if test="discountMoney != null">discount_money = #{discountMoney},</if>
+            <if test="totalPrice != null">total_price = #{totalPrice},</if>
+            <if test="accountId != null">account_id = #{accountId},</if>
+            <if test="billNo != null">bill_no = #{billNo},</if>
+            <if test="billTime != null">bill_time = #{billTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="fileName != null">file_name = #{fileName},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="tenantId != null">tenant_id = #{tenantId},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteJshAccountHeadById" parameterType="Long">
+        delete from jsh_account_head where id = #{id}
+    </delete>
+
+    <delete id="deleteJshAccountHeadByIds" parameterType="String">
+        delete from jsh_account_head where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

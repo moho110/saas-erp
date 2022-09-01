@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vrmlstudio.erp.mapper.JshMaterialMapper">
+    
+    <resultMap type="JshMaterial" id="JshMaterialResult">
+        <result property="id"    column="id"    />
+        <result property="categoryId"    column="category_id"    />
+        <result property="name"    column="name"    />
+        <result property="mfrs"    column="mfrs"    />
+        <result property="model"    column="model"    />
+        <result property="standard"    column="standard"    />
+        <result property="color"    column="color"    />
+        <result property="unit"    column="unit"    />
+        <result property="remark"    column="remark"    />
+        <result property="imgName"    column="img_name"    />
+        <result property="unitId"    column="unit_id"    />
+        <result property="expiryNum"    column="expiry_num"    />
+        <result property="weight"    column="weight"    />
+        <result property="enabled"    column="enabled"    />
+        <result property="otherField1"    column="other_field1"    />
+        <result property="otherField2"    column="other_field2"    />
+        <result property="otherField3"    column="other_field3"    />
+        <result property="enableSerialNumber"    column="enable_serial_number"    />
+        <result property="enableBatchNumber"    column="enable_batch_number"    />
+        <result property="tenantId"    column="tenant_id"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectJshMaterialVo">
+        select id, category_id, name, mfrs, model, standard, color, unit, remark, img_name, unit_id, expiry_num, weight, enabled, other_field1, other_field2, other_field3, enable_serial_number, enable_batch_number, tenant_id, delete_flag from jsh_material
+    </sql>
+
+    <select id="selectJshMaterialList" parameterType="JshMaterial" resultMap="JshMaterialResult">
+        <include refid="selectJshMaterialVo"/>
+        <where>  
+            <if test="categoryId != null "> and category_id = #{categoryId}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="mfrs != null  and mfrs != ''"> and mfrs = #{mfrs}</if>
+            <if test="model != null  and model != ''"> and model = #{model}</if>
+            <if test="standard != null  and standard != ''"> and standard = #{standard}</if>
+            <if test="color != null  and color != ''"> and color = #{color}</if>
+            <if test="unit != null  and unit != ''"> and unit = #{unit}</if>
+            <if test="imgName != null  and imgName != ''"> and img_name like concat('%', #{imgName}, '%')</if>
+            <if test="unitId != null "> and unit_id = #{unitId}</if>
+            <if test="expiryNum != null "> and expiry_num = #{expiryNum}</if>
+            <if test="weight != null "> and weight = #{weight}</if>
+            <if test="enabled != null "> and enabled = #{enabled}</if>
+            <if test="otherField1 != null  and otherField1 != ''"> and other_field1 = #{otherField1}</if>
+            <if test="otherField2 != null  and otherField2 != ''"> and other_field2 = #{otherField2}</if>
+            <if test="otherField3 != null  and otherField3 != ''"> and other_field3 = #{otherField3}</if>
+            <if test="enableSerialNumber != null  and enableSerialNumber != ''"> and enable_serial_number = #{enableSerialNumber}</if>
+            <if test="enableBatchNumber != null  and enableBatchNumber != ''"> and enable_batch_number = #{enableBatchNumber}</if>
+            <if test="tenantId != null "> and tenant_id = #{tenantId}</if>
+            <if test="deleteFlag != null  and deleteFlag != ''"> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectJshMaterialById" parameterType="Long" resultMap="JshMaterialResult">
+        <include refid="selectJshMaterialVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertJshMaterial" parameterType="JshMaterial" useGeneratedKeys="true" keyProperty="id">
+        insert into jsh_material
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="categoryId != null">category_id,</if>
+            <if test="name != null">name,</if>
+            <if test="mfrs != null">mfrs,</if>
+            <if test="model != null">model,</if>
+            <if test="standard != null">standard,</if>
+            <if test="color != null">color,</if>
+            <if test="unit != null">unit,</if>
+            <if test="remark != null">remark,</if>
+            <if test="imgName != null">img_name,</if>
+            <if test="unitId != null">unit_id,</if>
+            <if test="expiryNum != null">expiry_num,</if>
+            <if test="weight != null">weight,</if>
+            <if test="enabled != null">enabled,</if>
+            <if test="otherField1 != null">other_field1,</if>
+            <if test="otherField2 != null">other_field2,</if>
+            <if test="otherField3 != null">other_field3,</if>
+            <if test="enableSerialNumber != null">enable_serial_number,</if>
+            <if test="enableBatchNumber != null">enable_batch_number,</if>
+            <if test="tenantId != null">tenant_id,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="categoryId != null">#{categoryId},</if>
+            <if test="name != null">#{name},</if>
+            <if test="mfrs != null">#{mfrs},</if>
+            <if test="model != null">#{model},</if>
+            <if test="standard != null">#{standard},</if>
+            <if test="color != null">#{color},</if>
+            <if test="unit != null">#{unit},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="imgName != null">#{imgName},</if>
+            <if test="unitId != null">#{unitId},</if>
+            <if test="expiryNum != null">#{expiryNum},</if>
+            <if test="weight != null">#{weight},</if>
+            <if test="enabled != null">#{enabled},</if>
+            <if test="otherField1 != null">#{otherField1},</if>
+            <if test="otherField2 != null">#{otherField2},</if>
+            <if test="otherField3 != null">#{otherField3},</if>
+            <if test="enableSerialNumber != null">#{enableSerialNumber},</if>
+            <if test="enableBatchNumber != null">#{enableBatchNumber},</if>
+            <if test="tenantId != null">#{tenantId},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJshMaterial" parameterType="JshMaterial">
+        update jsh_material
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="categoryId != null">category_id = #{categoryId},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="mfrs != null">mfrs = #{mfrs},</if>
+            <if test="model != null">model = #{model},</if>
+            <if test="standard != null">standard = #{standard},</if>
+            <if test="color != null">color = #{color},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="imgName != null">img_name = #{imgName},</if>
+            <if test="unitId != null">unit_id = #{unitId},</if>
+            <if test="expiryNum != null">expiry_num = #{expiryNum},</if>
+            <if test="weight != null">weight = #{weight},</if>
+            <if test="enabled != null">enabled = #{enabled},</if>
+            <if test="otherField1 != null">other_field1 = #{otherField1},</if>
+            <if test="otherField2 != null">other_field2 = #{otherField2},</if>
+            <if test="otherField3 != null">other_field3 = #{otherField3},</if>
+            <if test="enableSerialNumber != null">enable_serial_number = #{enableSerialNumber},</if>
+            <if test="enableBatchNumber != null">enable_batch_number = #{enableBatchNumber},</if>
+            <if test="tenantId != null">tenant_id = #{tenantId},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteJshMaterialById" parameterType="Long">
+        delete from jsh_material where id = #{id}
+    </delete>
+
+    <delete id="deleteJshMaterialByIds" parameterType="String">
+        delete from jsh_material where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

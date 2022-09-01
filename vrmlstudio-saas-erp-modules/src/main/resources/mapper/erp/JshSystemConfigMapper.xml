@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vrmlstudio.erp.mapper.JshSystemConfigMapper">
+    
+    <resultMap type="JshSystemConfig" id="JshSystemConfigResult">
+        <result property="id"    column="id"    />
+        <result property="companyName"    column="company_name"    />
+        <result property="companyContacts"    column="company_contacts"    />
+        <result property="companyAddress"    column="company_address"    />
+        <result property="companyTel"    column="company_tel"    />
+        <result property="companyFax"    column="company_fax"    />
+        <result property="companyPostCode"    column="company_post_code"    />
+        <result property="saleAgreement"    column="sale_agreement"    />
+        <result property="depotFlag"    column="depot_flag"    />
+        <result property="customerFlag"    column="customer_flag"    />
+        <result property="minusStockFlag"    column="minus_stock_flag"    />
+        <result property="purchaseBySaleFlag"    column="purchase_by_sale_flag"    />
+        <result property="tenantId"    column="tenant_id"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectJshSystemConfigVo">
+        select id, company_name, company_contacts, company_address, company_tel, company_fax, company_post_code, sale_agreement, depot_flag, customer_flag, minus_stock_flag, purchase_by_sale_flag, tenant_id, delete_flag from jsh_system_config
+    </sql>
+
+    <select id="selectJshSystemConfigList" parameterType="JshSystemConfig" resultMap="JshSystemConfigResult">
+        <include refid="selectJshSystemConfigVo"/>
+        <where>  
+            <if test="companyName != null  and companyName != ''"> and company_name like concat('%', #{companyName}, '%')</if>
+            <if test="companyContacts != null  and companyContacts != ''"> and company_contacts = #{companyContacts}</if>
+            <if test="companyAddress != null  and companyAddress != ''"> and company_address = #{companyAddress}</if>
+            <if test="companyTel != null  and companyTel != ''"> and company_tel = #{companyTel}</if>
+            <if test="companyFax != null  and companyFax != ''"> and company_fax = #{companyFax}</if>
+            <if test="companyPostCode != null  and companyPostCode != ''"> and company_post_code = #{companyPostCode}</if>
+            <if test="saleAgreement != null  and saleAgreement != ''"> and sale_agreement = #{saleAgreement}</if>
+            <if test="depotFlag != null  and depotFlag != ''"> and depot_flag = #{depotFlag}</if>
+            <if test="customerFlag != null  and customerFlag != ''"> and customer_flag = #{customerFlag}</if>
+            <if test="minusStockFlag != null  and minusStockFlag != ''"> and minus_stock_flag = #{minusStockFlag}</if>
+            <if test="purchaseBySaleFlag != null  and purchaseBySaleFlag != ''"> and purchase_by_sale_flag = #{purchaseBySaleFlag}</if>
+            <if test="tenantId != null "> and tenant_id = #{tenantId}</if>
+            <if test="deleteFlag != null  and deleteFlag != ''"> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectJshSystemConfigById" parameterType="Long" resultMap="JshSystemConfigResult">
+        <include refid="selectJshSystemConfigVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertJshSystemConfig" parameterType="JshSystemConfig" useGeneratedKeys="true" keyProperty="id">
+        insert into jsh_system_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="companyName != null">company_name,</if>
+            <if test="companyContacts != null">company_contacts,</if>
+            <if test="companyAddress != null">company_address,</if>
+            <if test="companyTel != null">company_tel,</if>
+            <if test="companyFax != null">company_fax,</if>
+            <if test="companyPostCode != null">company_post_code,</if>
+            <if test="saleAgreement != null">sale_agreement,</if>
+            <if test="depotFlag != null">depot_flag,</if>
+            <if test="customerFlag != null">customer_flag,</if>
+            <if test="minusStockFlag != null">minus_stock_flag,</if>
+            <if test="purchaseBySaleFlag != null">purchase_by_sale_flag,</if>
+            <if test="tenantId != null">tenant_id,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="companyName != null">#{companyName},</if>
+            <if test="companyContacts != null">#{companyContacts},</if>
+            <if test="companyAddress != null">#{companyAddress},</if>
+            <if test="companyTel != null">#{companyTel},</if>
+            <if test="companyFax != null">#{companyFax},</if>
+            <if test="companyPostCode != null">#{companyPostCode},</if>
+            <if test="saleAgreement != null">#{saleAgreement},</if>
+            <if test="depotFlag != null">#{depotFlag},</if>
+            <if test="customerFlag != null">#{customerFlag},</if>
+            <if test="minusStockFlag != null">#{minusStockFlag},</if>
+            <if test="purchaseBySaleFlag != null">#{purchaseBySaleFlag},</if>
+            <if test="tenantId != null">#{tenantId},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJshSystemConfig" parameterType="JshSystemConfig">
+        update jsh_system_config
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="companyName != null">company_name = #{companyName},</if>
+            <if test="companyContacts != null">company_contacts = #{companyContacts},</if>
+            <if test="companyAddress != null">company_address = #{companyAddress},</if>
+            <if test="companyTel != null">company_tel = #{companyTel},</if>
+            <if test="companyFax != null">company_fax = #{companyFax},</if>
+            <if test="companyPostCode != null">company_post_code = #{companyPostCode},</if>
+            <if test="saleAgreement != null">sale_agreement = #{saleAgreement},</if>
+            <if test="depotFlag != null">depot_flag = #{depotFlag},</if>
+            <if test="customerFlag != null">customer_flag = #{customerFlag},</if>
+            <if test="minusStockFlag != null">minus_stock_flag = #{minusStockFlag},</if>
+            <if test="purchaseBySaleFlag != null">purchase_by_sale_flag = #{purchaseBySaleFlag},</if>
+            <if test="tenantId != null">tenant_id = #{tenantId},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteJshSystemConfigById" parameterType="Long">
+        delete from jsh_system_config where id = #{id}
+    </delete>
+
+    <delete id="deleteJshSystemConfigByIds" parameterType="String">
+        delete from jsh_system_config where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

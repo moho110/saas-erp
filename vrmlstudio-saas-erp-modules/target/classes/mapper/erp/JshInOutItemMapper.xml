@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vrmlstudio.erp.mapper.JshInOutItemMapper">
+    
+    <resultMap type="JshInOutItem" id="JshInOutItemResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="type"    column="type"    />
+        <result property="remark"    column="remark"    />
+        <result property="tenantId"    column="tenant_id"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectJshInOutItemVo">
+        select id, name, type, remark, tenant_id, delete_flag from jsh_in_out_item
+    </sql>
+
+    <select id="selectJshInOutItemList" parameterType="JshInOutItem" resultMap="JshInOutItemResult">
+        <include refid="selectJshInOutItemVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="tenantId != null "> and tenant_id = #{tenantId}</if>
+            <if test="deleteFlag != null  and deleteFlag != ''"> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectJshInOutItemById" parameterType="Long" resultMap="JshInOutItemResult">
+        <include refid="selectJshInOutItemVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertJshInOutItem" parameterType="JshInOutItem" useGeneratedKeys="true" keyProperty="id">
+        insert into jsh_in_out_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="type != null">type,</if>
+            <if test="remark != null">remark,</if>
+            <if test="tenantId != null">tenant_id,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="type != null">#{type},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="tenantId != null">#{tenantId},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJshInOutItem" parameterType="JshInOutItem">
+        update jsh_in_out_item
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="tenantId != null">tenant_id = #{tenantId},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteJshInOutItemById" parameterType="Long">
+        delete from jsh_in_out_item where id = #{id}
+    </delete>
+
+    <delete id="deleteJshInOutItemByIds" parameterType="String">
+        delete from jsh_in_out_item where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vrmlstudio.erp.mapper.JshMaterialExtendMapper">
+    
+    <resultMap type="JshMaterialExtend" id="JshMaterialExtendResult">
+        <result property="id"    column="id"    />
+        <result property="materialId"    column="material_id"    />
+        <result property="barCode"    column="bar_code"    />
+        <result property="commodityUnit"    column="commodity_unit"    />
+        <result property="sku"    column="sku"    />
+        <result property="purchaseDecimal"    column="purchase_decimal"    />
+        <result property="commodityDecimal"    column="commodity_decimal"    />
+        <result property="wholesaleDecimal"    column="wholesale_decimal"    />
+        <result property="lowDecimal"    column="low_decimal"    />
+        <result property="defaultFlag"    column="default_flag"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createSerial"    column="create_serial"    />
+        <result property="updateSerial"    column="update_serial"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="tenantId"    column="tenant_id"    />
+        <result property="deleteFlag"    column="delete_Flag"    />
+    </resultMap>
+
+    <sql id="selectJshMaterialExtendVo">
+        select id, material_id, bar_code, commodity_unit, sku, purchase_decimal, commodity_decimal, wholesale_decimal, low_decimal, default_flag, create_time, create_serial, update_serial, update_time, tenant_id, delete_Flag from jsh_material_extend
+    </sql>
+
+    <select id="selectJshMaterialExtendList" parameterType="JshMaterialExtend" resultMap="JshMaterialExtendResult">
+        <include refid="selectJshMaterialExtendVo"/>
+        <where>  
+            <if test="materialId != null "> and material_id = #{materialId}</if>
+            <if test="barCode != null  and barCode != ''"> and bar_code = #{barCode}</if>
+            <if test="commodityUnit != null  and commodityUnit != ''"> and commodity_unit = #{commodityUnit}</if>
+            <if test="sku != null  and sku != ''"> and sku = #{sku}</if>
+            <if test="purchaseDecimal != null "> and purchase_decimal = #{purchaseDecimal}</if>
+            <if test="commodityDecimal != null "> and commodity_decimal = #{commodityDecimal}</if>
+            <if test="wholesaleDecimal != null "> and wholesale_decimal = #{wholesaleDecimal}</if>
+            <if test="lowDecimal != null "> and low_decimal = #{lowDecimal}</if>
+            <if test="defaultFlag != null  and defaultFlag != ''"> and default_flag = #{defaultFlag}</if>
+            <if test="createSerial != null  and createSerial != ''"> and create_serial = #{createSerial}</if>
+            <if test="updateSerial != null  and updateSerial != ''"> and update_serial = #{updateSerial}</if>
+            <if test="tenantId != null "> and tenant_id = #{tenantId}</if>
+            <if test="deleteFlag != null  and deleteFlag != ''"> and delete_Flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectJshMaterialExtendById" parameterType="Long" resultMap="JshMaterialExtendResult">
+        <include refid="selectJshMaterialExtendVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertJshMaterialExtend" parameterType="JshMaterialExtend" useGeneratedKeys="true" keyProperty="id">
+        insert into jsh_material_extend
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="materialId != null">material_id,</if>
+            <if test="barCode != null">bar_code,</if>
+            <if test="commodityUnit != null">commodity_unit,</if>
+            <if test="sku != null">sku,</if>
+            <if test="purchaseDecimal != null">purchase_decimal,</if>
+            <if test="commodityDecimal != null">commodity_decimal,</if>
+            <if test="wholesaleDecimal != null">wholesale_decimal,</if>
+            <if test="lowDecimal != null">low_decimal,</if>
+            <if test="defaultFlag != null">default_flag,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createSerial != null">create_serial,</if>
+            <if test="updateSerial != null">update_serial,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="tenantId != null">tenant_id,</if>
+            <if test="deleteFlag != null">delete_Flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="materialId != null">#{materialId},</if>
+            <if test="barCode != null">#{barCode},</if>
+            <if test="commodityUnit != null">#{commodityUnit},</if>
+            <if test="sku != null">#{sku},</if>
+            <if test="purchaseDecimal != null">#{purchaseDecimal},</if>
+            <if test="commodityDecimal != null">#{commodityDecimal},</if>
+            <if test="wholesaleDecimal != null">#{wholesaleDecimal},</if>
+            <if test="lowDecimal != null">#{lowDecimal},</if>
+            <if test="defaultFlag != null">#{defaultFlag},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createSerial != null">#{createSerial},</if>
+            <if test="updateSerial != null">#{updateSerial},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="tenantId != null">#{tenantId},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJshMaterialExtend" parameterType="JshMaterialExtend">
+        update jsh_material_extend
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="materialId != null">material_id = #{materialId},</if>
+            <if test="barCode != null">bar_code = #{barCode},</if>
+            <if test="commodityUnit != null">commodity_unit = #{commodityUnit},</if>
+            <if test="sku != null">sku = #{sku},</if>
+            <if test="purchaseDecimal != null">purchase_decimal = #{purchaseDecimal},</if>
+            <if test="commodityDecimal != null">commodity_decimal = #{commodityDecimal},</if>
+            <if test="wholesaleDecimal != null">wholesale_decimal = #{wholesaleDecimal},</if>
+            <if test="lowDecimal != null">low_decimal = #{lowDecimal},</if>
+            <if test="defaultFlag != null">default_flag = #{defaultFlag},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createSerial != null">create_serial = #{createSerial},</if>
+            <if test="updateSerial != null">update_serial = #{updateSerial},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="tenantId != null">tenant_id = #{tenantId},</if>
+            <if test="deleteFlag != null">delete_Flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteJshMaterialExtendById" parameterType="Long">
+        delete from jsh_material_extend where id = #{id}
+    </delete>
+
+    <delete id="deleteJshMaterialExtendByIds" parameterType="String">
+        delete from jsh_material_extend where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

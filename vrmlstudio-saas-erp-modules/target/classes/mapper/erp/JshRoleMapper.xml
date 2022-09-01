@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vrmlstudio.erp.mapper.JshRoleMapper">
+    
+    <resultMap type="JshRole" id="JshRoleResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="type"    column="type"    />
+        <result property="value"    column="value"    />
+        <result property="description"    column="description"    />
+        <result property="tenantId"    column="tenant_id"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectJshRoleVo">
+        select id, name, type, value, description, tenant_id, delete_flag from jsh_role
+    </sql>
+
+    <select id="selectJshRoleList" parameterType="JshRole" resultMap="JshRoleResult">
+        <include refid="selectJshRoleVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="value != null  and value != ''"> and value = #{value}</if>
+            <if test="description != null  and description != ''"> and description = #{description}</if>
+            <if test="tenantId != null "> and tenant_id = #{tenantId}</if>
+            <if test="deleteFlag != null  and deleteFlag != ''"> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectJshRoleById" parameterType="Long" resultMap="JshRoleResult">
+        <include refid="selectJshRoleVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertJshRole" parameterType="JshRole" useGeneratedKeys="true" keyProperty="id">
+        insert into jsh_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="type != null">type,</if>
+            <if test="value != null">value,</if>
+            <if test="description != null">description,</if>
+            <if test="tenantId != null">tenant_id,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="type != null">#{type},</if>
+            <if test="value != null">#{value},</if>
+            <if test="description != null">#{description},</if>
+            <if test="tenantId != null">#{tenantId},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJshRole" parameterType="JshRole">
+        update jsh_role
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="value != null">value = #{value},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="tenantId != null">tenant_id = #{tenantId},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteJshRoleById" parameterType="Long">
+        delete from jsh_role where id = #{id}
+    </delete>
+
+    <delete id="deleteJshRoleByIds" parameterType="String">
+        delete from jsh_role where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

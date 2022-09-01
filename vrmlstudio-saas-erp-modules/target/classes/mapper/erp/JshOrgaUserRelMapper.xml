@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vrmlstudio.erp.mapper.JshOrgaUserRelMapper">
+    
+    <resultMap type="JshOrgaUserRel" id="JshOrgaUserRelResult">
+        <result property="id"    column="id"    />
+        <result property="orgaId"    column="orga_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="userBlngOrgaDsplSeq"    column="user_blng_orga_dspl_seq"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="creator"    column="creator"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updater"    column="updater"    />
+        <result property="tenantId"    column="tenant_id"    />
+    </resultMap>
+
+    <sql id="selectJshOrgaUserRelVo">
+        select id, orga_id, user_id, user_blng_orga_dspl_seq, delete_flag, create_time, creator, update_time, updater, tenant_id from jsh_orga_user_rel
+    </sql>
+
+    <select id="selectJshOrgaUserRelList" parameterType="JshOrgaUserRel" resultMap="JshOrgaUserRelResult">
+        <include refid="selectJshOrgaUserRelVo"/>
+        <where>  
+            <if test="orgaId != null "> and orga_id = #{orgaId}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="userBlngOrgaDsplSeq != null  and userBlngOrgaDsplSeq != ''"> and user_blng_orga_dspl_seq = #{userBlngOrgaDsplSeq}</if>
+            <if test="deleteFlag != null  and deleteFlag != ''"> and delete_flag = #{deleteFlag}</if>
+            <if test="creator != null "> and creator = #{creator}</if>
+            <if test="updater != null "> and updater = #{updater}</if>
+            <if test="tenantId != null "> and tenant_id = #{tenantId}</if>
+        </where>
+    </select>
+    
+    <select id="selectJshOrgaUserRelById" parameterType="Long" resultMap="JshOrgaUserRelResult">
+        <include refid="selectJshOrgaUserRelVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertJshOrgaUserRel" parameterType="JshOrgaUserRel" useGeneratedKeys="true" keyProperty="id">
+        insert into jsh_orga_user_rel
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orgaId != null">orga_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="userBlngOrgaDsplSeq != null">user_blng_orga_dspl_seq,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="creator != null">creator,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updater != null">updater,</if>
+            <if test="tenantId != null">tenant_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orgaId != null">#{orgaId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="userBlngOrgaDsplSeq != null">#{userBlngOrgaDsplSeq},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="creator != null">#{creator},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updater != null">#{updater},</if>
+            <if test="tenantId != null">#{tenantId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJshOrgaUserRel" parameterType="JshOrgaUserRel">
+        update jsh_orga_user_rel
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orgaId != null">orga_id = #{orgaId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="userBlngOrgaDsplSeq != null">user_blng_orga_dspl_seq = #{userBlngOrgaDsplSeq},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="creator != null">creator = #{creator},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updater != null">updater = #{updater},</if>
+            <if test="tenantId != null">tenant_id = #{tenantId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteJshOrgaUserRelById" parameterType="Long">
+        delete from jsh_orga_user_rel where id = #{id}
+    </delete>
+
+    <delete id="deleteJshOrgaUserRelByIds" parameterType="String">
+        delete from jsh_orga_user_rel where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

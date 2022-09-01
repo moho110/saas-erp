@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vrmlstudio.erp.mapper.JshMaterialCurrentStockMapper">
+    
+    <resultMap type="JshMaterialCurrentStock" id="JshMaterialCurrentStockResult">
+        <result property="id"    column="id"    />
+        <result property="materialId"    column="material_id"    />
+        <result property="depotId"    column="depot_id"    />
+        <result property="currentNumber"    column="current_number"    />
+        <result property="tenantId"    column="tenant_id"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectJshMaterialCurrentStockVo">
+        select id, material_id, depot_id, current_number, tenant_id, delete_flag from jsh_material_current_stock
+    </sql>
+
+    <select id="selectJshMaterialCurrentStockList" parameterType="JshMaterialCurrentStock" resultMap="JshMaterialCurrentStockResult">
+        <include refid="selectJshMaterialCurrentStockVo"/>
+        <where>  
+            <if test="materialId != null "> and material_id = #{materialId}</if>
+            <if test="depotId != null "> and depot_id = #{depotId}</if>
+            <if test="currentNumber != null "> and current_number = #{currentNumber}</if>
+            <if test="tenantId != null "> and tenant_id = #{tenantId}</if>
+            <if test="deleteFlag != null  and deleteFlag != ''"> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectJshMaterialCurrentStockById" parameterType="Long" resultMap="JshMaterialCurrentStockResult">
+        <include refid="selectJshMaterialCurrentStockVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertJshMaterialCurrentStock" parameterType="JshMaterialCurrentStock" useGeneratedKeys="true" keyProperty="id">
+        insert into jsh_material_current_stock
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="materialId != null">material_id,</if>
+            <if test="depotId != null">depot_id,</if>
+            <if test="currentNumber != null">current_number,</if>
+            <if test="tenantId != null">tenant_id,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="materialId != null">#{materialId},</if>
+            <if test="depotId != null">#{depotId},</if>
+            <if test="currentNumber != null">#{currentNumber},</if>
+            <if test="tenantId != null">#{tenantId},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJshMaterialCurrentStock" parameterType="JshMaterialCurrentStock">
+        update jsh_material_current_stock
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="materialId != null">material_id = #{materialId},</if>
+            <if test="depotId != null">depot_id = #{depotId},</if>
+            <if test="currentNumber != null">current_number = #{currentNumber},</if>
+            <if test="tenantId != null">tenant_id = #{tenantId},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteJshMaterialCurrentStockById" parameterType="Long">
+        delete from jsh_material_current_stock where id = #{id}
+    </delete>
+
+    <delete id="deleteJshMaterialCurrentStockByIds" parameterType="String">
+        delete from jsh_material_current_stock where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
